@@ -9,7 +9,7 @@ let card = document.querySelector('.card');
 
 let lis = document.querySelectorAll('li');
 
-let tarefas = [];
+let tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
 
 function renderizar(){
     lista.innerHTML = ''
@@ -25,7 +25,7 @@ function renderizar(){
     }
 }
 
-
+renderizar()
 
 
 btn.onclick = function(){
@@ -35,7 +35,8 @@ btn.onclick = function(){
         tarefas.push(nova_tarefa)
         renderizar();
         input.value = ''
-        remove_s()
+        remove_s();
+        salvarDados()
     }else{
         remove_s()
         let span = document.createElement('span');
@@ -59,4 +60,9 @@ function remove_s(){
 function removeTarefa(tar){
     tarefas.splice(tarefas.indexOf(tar.textContent), 1)
     renderizar()
+    salvarDados()
+}
+
+function salvarDados(){
+    localStorage.setItem('tarefas', JSON.stringify(tarefas))
 }
